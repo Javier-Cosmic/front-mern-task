@@ -9,9 +9,9 @@ const StyleTask = styled.li`
     margin-bottom: 2rem;
     font-size: 15px;
     border-radius: .8rem;
-    -webkit-box-shadow: 0px 4px 10px -3px rgba(117,117,117,0.4);
-    -moz-box-shadow: 0px 4px 10px -3px rgba(117,117,117,0.4);
-    box-shadow: 0px 3px 10px -3px rgba(60,60,60,0.4);
+    -webkit-box-shadow: 0px 3px 10px -2px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 3px 10px -2px rgba(0,0,0,0.35);
+    box-shadow: 0px 3px 10px -2px rgba(0,0,0,0.35);
 
     @media (max-width: 750px){
         display: block;

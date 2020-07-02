@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ContainerApp from "../layout/ContainerApp";
 import ContainerMain from "../layout/ContainerMain";
 import SideBar from "../layout/SideBar";
@@ -17,12 +17,18 @@ import ButtonToggle from "../layout/ButtonToggle";
 import Overlay from "../layout/Overlay";
 import TaskForm from "../tasks/TaskForm";
 import TaskList from "../tasks/TaskList";
+import ThemeContext from "../../context/projects/ThemeContext";
+import ProjectContext from "../../context/projects/ProjectContext";
 
 const Projects = () => {
   const [color, setColor] = useState("#A5BFBE");
   const [textColor, setTextColor] = useState("black");
   const [hover, setHover] = useState("#E42F8A");
   const [menu, setMenu] = useState(false);
+
+  // context project state
+  const projectContext = useContext(ProjectContext);
+  const { currentProject } = projectContext;
 
   // Metodo para cambiar los colores del tema -> parametro obtenido del select {options} -> colores
   const changeColor = (color) => {
@@ -79,7 +85,8 @@ const Projects = () => {
 
   return (
     <ContainerApp>
-  
+      <ThemeContext.Provider value={setMenu}>
+        
       {/* Sidebar */}
       <SideBar bordercolor={color === '#A5BFBE' ? 'rgb(128,154,153,0.7)' : 'rgb(178,178,178,0.5)'} changeColor={color}>
         <Title margin='0 0 30px 0' fontsize="1.875em" color={textColor}>
@@ -127,7 +134,10 @@ const Projects = () => {
         </Header>
 
             <main>
-              <TaskForm />
+              {currentProject
+                ? <TaskForm />
+                : null
+              }
               <ContainerTask>
                 <TaskList />
               </ContainerTask>
@@ -147,6 +157,7 @@ const Projects = () => {
               width="200px"
               display="inline-block"
               margin="10px 0px 0px 0px"
+              marginsm='40px 0 10px 0'
             >
               Personalizar tema
             </Label>
@@ -174,6 +185,7 @@ const Projects = () => {
           }
     
       </ContainerMain>
+      </ThemeContext.Provider>
     </ContainerApp>
   );
 };

@@ -1,26 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import FormTask from "../layout/FormTask";
 import ContainerInputTask from "../layout/ContainerInputTask";
 import Input from "../layout/Input";
 import Title from "../layout/Titles";
-import Button from "../layout/Button";
+import ButtonInput from "../layout/ButtonInput";
+import Msg from "../layout/Msg";
+import ProjectContext from "../../context/projects/ProjectContext";
+import TaskContext from "../../context/tasks/TaskContext";
+import Swal from 'sweetalert2';
 
 const TaskForm = () => {
-  const [formTask, setFormTask] = useState({
-    task: "",
+
+  // context de task state
+  const taskContext = useContext(TaskContext);
+  const { addTask, validateTask, errorTask, getTask } = taskContext;
+
+  //context de project state
+  const projectContext = useContext(ProjectContext);
+  const { currentProject } = projectContext;
+
+  // array destructuring  ---> id con el proyecto actual
+  const [currentName] = currentProject;
+
+  const [tasks, setTasks] = useState({
+      name: "",
   });
 
   const onChangeTask = (e) => {
-    e.preventDefault();
-
-    setFormTask({
-      ...formTask,
-      [e.target.name]: e.target.value,
+    // escuchar los datos del input
+    setTasks({
+        ...tasks,
+        [e.target.name]: e.target.value,
     });
+
   };
 
+  // destructuring del state
+  const { name } = tasks;
+
+  // anadir tarea
+  const onSubmitTask = (e) => {
+    e.preventDefault();
+
+    // validar que el nombre no este vacio
+    if (name.trim() === '') {
+      validateTask();
+      return;
+    }
+
+    // le añadimos el id del proyecto actual a las tareas
+    tasks.projectId = currentName.id;
+    tasks.estado = false;
+
+    // le pasamos por parametros el objeto tarea
+    addTask(tasks);
+  
+    // actualizar las tareas a mostrar
+    getTask(currentName.id);
+
+    //alerta
+    Swal.fire({
+      icon: 'success',
+      title: 'Tarea Agregada',
+      confirmButtonColor: '#2F2F2F'
+    })
+
+    //limpiar state
+    setTasks({
+      name: ""
+    })
+  }
+
   return (
-    <FormTask>
+    <FormTask onSubmit={onSubmitTask}>
       <Title
         fontsize="28px"
         fontsizexs="25px"
@@ -29,21 +81,28 @@ const TaskForm = () => {
       >
         Añadir una tarea
       </Title>
-      <ContainerInputTask>
+      <ContainerInputTask marginb={errorTask ? '32px' : '0px'}>
         <Input
           border="1px solid hsl(0,0%,80%)"
           height="40px"
           type="text"
-          id="task"
-          name="task"
-          value={formTask.task}
+          name="name"
+          value={name}
           placeholder="&#xf08d;  Ingresa el nombre de tu tarea"
           onChange={onChangeTask}
         />
-        <Button width="42%" margin="0 0 0 10px" type="button" onClick="">
-          Agregar tarea
-        </Button>
+
+        <ButtonInput 
+          width="42%" 
+          type="submit"
+          margin="0 0 0 10px" 
+          value="Agregar tarea"
+        />
       </ContainerInputTask>
+        {errorTask
+          ? <Msg errorTask fontsizesm='13px'>Debes indicar el nombre de la tarea.</Msg>
+          : null
+        }
     </FormTask>
   );
 };

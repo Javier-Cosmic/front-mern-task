@@ -1,35 +1,49 @@
-import React, {useState} from 'react';
-import ProjectContent from './ProjectContent'
-import ListProject from '../layout/ListProject';
+import React, { useState, useContext, useEffect } from "react";
+import ProjectContent from "./ProjectContent";
+import ListProject from "../layout/ListProject";
+import Paragraph from "../layout/Paragraph";
+import ProjectContext from "../../context/projects/ProjectContext";
 
-const ProjectsList = ({hoverColor, color, colorText}) => {
+const ProjectsList = ({hoverColor, color, colorText }) => {
+    // context project state
+    const projectContext = useContext(ProjectContext);
 
-    const projects = [
-        {name: 'Login'},
-        {name: 'Ecommerce'},
-        {name: 'Diseño'},
-        {name: 'nse'},
-        {name: 'xxx'},
-        {name: 'soloinvento'},
-        {name: 'soloinvento'},
-        {name: 'soloinvento'},
-        {name: 'soloinvento'},
-        {name: 'soloinvento'},
-        {name: 'soloinvento'},
-    ] 
+    // extraemos los estados y funciones de project state desde el context
+    const { projects, getProject } = projectContext;
+
+    useEffect(() => {
+        getProject();
+    }, []);
+
+    // validamos si no hay proyectos
+    if (projects.length === 0) {
+        return (
+        <Paragraph
+            margin="10px 0 0 0px"
+            fontsize="12px"
+            fontsizexs="14.4px"
+            fontsizesm="18px"
+            marginsm="10px"
+            color={colorText}
+        >
+            Aún no has creado tu primer proyecto.
+        </Paragraph>
+        );
+    }
 
     return (
         <ListProject>
-            {projects.map(proyecto => (
-                <ProjectContent
-                    hoverColor={hoverColor}
-                    colorText={colorText}
-                    project={proyecto}
-                    color={color}
-                />
-            ))}
+        {projects.map((proyecto) => (
+            <ProjectContent
+                key={proyecto.id}
+                project={proyecto}
+                hoverColor={hoverColor}
+                colorText={colorText}
+                color={color}
+            />
+        ))}
         </ListProject>
-    ) 
-}
+    );
+};
 
 export default ProjectsList;

@@ -24,6 +24,11 @@ const ButtonLayout = styled.button`
         color: black;
       `}
 
+    ${({deleteButton}) => deleteButton && css`
+        background: none;
+    `};  
+
+
     &:hover{
         background: ${({theme, hoverMain}) => hoverMain || theme.colors.tertiary};
         color:white;
@@ -59,6 +64,7 @@ const ButtonLayout = styled.button`
 `;
 
 const Button = ({
+    deleteButton,
     hoverMain,
     hoverpink,
     hovernoBG,
@@ -79,6 +85,7 @@ const Button = ({
     children,
     }) => (
     <ButtonLayout
+        deleteButton={deleteButton}
         hoverMain={hoverMain}
         hoverpink={hoverpink}
         hovernoBG={hovernoBG}

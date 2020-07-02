@@ -7,6 +7,8 @@ const SidebarStyle = styled.div`
     background: ${({changeColor, theme}) => changeColor || theme.colors.main};
     padding: 2rem 4rem 1rem 4rem;
     transition: 0.5s ease-in-out;
+    position: relative;
+    z-index: 30;
     /* -webkit-box-shadow: 0px 4px 10px -3px rgba(117,117,117,1);
     -moz-box-shadow: 0px 4px 10px -3px rgba(117,117,117,1);
     box-shadow: 0px 4px 10px -3px rgba(117,117,117,1); */

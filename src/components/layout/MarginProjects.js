@@ -6,7 +6,7 @@ export default styled.div`
     overflow: auto;
 
     @media (max-width: 600px){
-        max-height: 180px;
+        max-height: 130px;
         overflow: auto;
     }
 `;

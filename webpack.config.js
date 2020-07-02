@@ -18,6 +18,8 @@ module.exports = {
         //host: '192.168.0.24'
     },
 
+    // devtool:'inline-source-map',
+
     resolve: {
         extensions: ['.js', '.jsx']
     },

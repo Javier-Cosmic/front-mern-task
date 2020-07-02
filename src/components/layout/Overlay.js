@@ -5,14 +5,13 @@ const StyleOverlay = styled.div`
 
     @media (max-width: 769px){
         transition: all 1s ease-in-out;
-        position: fixed;
-        z-index: 10;
+        position: fixed;        
         top:0;
         left:0;
         width:100%;
         height:100%;
         background-color: rgba(0, 0, 0, .5);
-        z-index: 1;
+        z-index: 20;
     }
 
 `;
