@@ -31,17 +31,18 @@ const InputStyle = styled.input`
 
 `;
 
-const Input = ({border, height, type, id, name, placeholder, value, onChange }) => (
+const Input = (props) => (
     <InputStyle
-        border={border}
-        height={height} 
-        type={type} 
-        id={id} 
-        name={name} 
-        placeholder={placeholder} 
-        value={value} 
-        onChange={onChange}>
+        ref={props.inner}
+        border={props.border}
+        height={props.height} 
+        type={props.type} 
+        id={props.id} 
+        name={props.name} 
+        placeholder={props.placeholder} 
+        value={props.value} 
+        onChange={props.onChange}>
     </InputStyle>
-);
+)
 
 export default Input;

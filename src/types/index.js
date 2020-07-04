@@ -10,3 +10,6 @@ export const TASK_PROJECT = 'TASK_PROJECT';
 export const NEW_TASK = 'NEW_TASK';
 export const ERROR_TASK = 'ERROR_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
+export const TASK_STATE = 'TASK_STATE';
+export const TASK_CURRENT = 'TASK_CURRENT';
+export const UPDATE_TASK = 'UPDATE_TASK';

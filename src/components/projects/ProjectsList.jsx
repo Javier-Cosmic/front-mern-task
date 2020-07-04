@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import ProjectContent from "./ProjectContent";
-import ListProject from "../layout/ListProject";
 import Paragraph from "../layout/Paragraph";
 import ProjectContext from "../../context/projects/ProjectContext";
 
@@ -32,7 +31,7 @@ const ProjectsList = ({hoverColor, color, colorText }) => {
     }
 
     return (
-        <ListProject>
+        <>
         {projects.map((proyecto) => (
             <ProjectContent
                 key={proyecto.id}
@@ -42,7 +41,7 @@ const ProjectsList = ({hoverColor, color, colorText }) => {
                 color={color}
             />
         ))}
-        </ListProject>
+        </>
     );
 };
 

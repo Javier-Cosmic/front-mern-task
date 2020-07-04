@@ -3,10 +3,10 @@ import styled, {keyframes} from 'styled-components';
 const opacity = keyframes`
     to{
         transform: translateX(-400px);
-        opacity: 0%;
+        opacity: 0;
     }
     from{
-        opacity: 100%;
+        opacity: 1;
         transform: translateX(0);
     }
 `;

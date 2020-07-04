@@ -6,7 +6,10 @@ import {
     TASK_PROJECT,
     NEW_TASK,
     ERROR_TASK,
-    DELETE_TASK
+    DELETE_TASK,
+    TASK_STATE,
+    TASK_CURRENT,
+    UPDATE_TASK
 } from '../../types';
 
 const TaskState = ({children}) => {
@@ -19,7 +22,8 @@ const TaskState = ({children}) => {
             { id: 4, name: "Guardar sesion en localstorage", estado: false, projectId: 3 },
         ],
         taskProject: null,
-        errorTask: false
+        errorTask: false,
+        currentask: null
 
     }
 
@@ -44,6 +48,14 @@ const TaskState = ({children}) => {
         })
     }
 
+    // obtener la tarea actual para editarla
+    const currentTask = (task) => {
+        dispatch({
+            type: TASK_CURRENT,
+            payload: task
+        })
+    }
+
     //validar el nombre de la tarea
     const validateTask = () => {
         dispatch({
@@ -60,15 +72,36 @@ const TaskState = ({children}) => {
         })
     }
 
+    // cambiar estado de la tarea
+    const changeState = (task) => {
+        dispatch({
+            type: TASK_STATE,
+            payload: task
+        })
+    }
+
+    //actualizar tarea
+    const updateTask = (task) => {
+        dispatch({
+            type: UPDATE_TASK,
+            payload: task
+        })
+    }
+
+
     // valores del context
     const values = {
         tasks: state.tasks,
         taskProject: state.taskProject,
         errorTask: state.errorTask,
+        currentask: state.currentask,
         getTask,
         addTask,
         validateTask,
-        deleteTask
+        deleteTask,
+        changeState,
+        currentTask,
+        updateTask
     }
 
     return (

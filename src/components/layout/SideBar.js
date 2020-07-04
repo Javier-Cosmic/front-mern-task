@@ -9,9 +9,6 @@ const SidebarStyle = styled.div`
     transition: 0.5s ease-in-out;
     position: relative;
     z-index: 30;
-    /* -webkit-box-shadow: 0px 4px 10px -3px rgba(117,117,117,1);
-    -moz-box-shadow: 0px 4px 10px -3px rgba(117,117,117,1);
-    box-shadow: 0px 4px 10px -3px rgba(117,117,117,1); */
     border-right: 1px solid rgb(178,178,178,1);
     border-right: 1px solid ${({bordercolor}) => bordercolor};
     /* 
