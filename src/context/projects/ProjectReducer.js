@@ -13,13 +13,14 @@ export default (state, action) => {
         case NEW_PROJECT:
             return {
                 ...state,
-                FormNewProject: true
+                FormNewProject: !state.FormNewProject,
+                msgValidateForm: false
             }
 
         case GET_PROJECT:
             return {
                 ...state,
-                projects: action.payload
+                projects: action.payload,
             }
         
         case ADD_PROJECT:
@@ -39,7 +40,9 @@ export default (state, action) => {
         case CURRENT_PROJECT:
             return {
                 ...state,
-                currentproject: state.projects.filter( project => project.id === action.payload)
+                currentproject: state.projects.filter( project => project.id === action.payload),
+                msgValidateForm: false,
+                // FormNewProject: false
             }
  
         case DELETE_PROJECT:

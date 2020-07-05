@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import WrapperUser from '../layout/WrapperUser';
 import WrapperBox from '../layout/WrapperBox';
 import WrapperFields from '../layout/WrapperFields';
@@ -16,6 +16,12 @@ const CreateAccount = () => {
         password: '',
         repassword: ''
     })
+
+    const inputRef = useRef();
+
+    useEffect(() => {
+        inputRef.current.focus();
+    }, []);
 
     const onChange = e => {
 
@@ -37,6 +43,7 @@ const CreateAccount = () => {
                     <WrapperFields>
                         <Label size='15px' width='320px' htmlFor='name'>Nombre: </Label>
                         <Input
+                            inner={inputRef}
                             type='text'
                             id='name'
                             name='name'

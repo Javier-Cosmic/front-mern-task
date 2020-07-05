@@ -120,13 +120,22 @@ const TaskForm = () => {
           placeholder="&#xf08d;  Ingresa el nombre de tu tarea"
           onChange={onChangeTask}
         />
-
-        <ButtonInput 
-          width="42%" 
-          type="submit"
-          margin="0 0 0 10px" 
-          value={currentask ? 'Editar tarea' : 'Agregar tarea'}
-        />
+        {currentask
+          ? <ButtonInput 
+              secondary
+              width="42%" 
+              type="submit"
+              margin="0 0 0 10px" 
+              value='Editar tarea'
+            />
+          : <ButtonInput 
+              width="42%" 
+              type="submit"
+              margin="0 0 0 10px" 
+              value='Agregar tarea'
+            />  
+        }
+        
       </ContainerInputTask>
         {errorTask
           ? <Msg errorTask fontsizesm='13px'>Debes indicar el nombre de la tarea.</Msg>

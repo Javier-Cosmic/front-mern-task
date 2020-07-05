@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import WrapperUser from '../layout/WrapperUser';
 import WrapperBox from '../layout/WrapperBox';
 import WrapperFields from '../layout/WrapperFields';
@@ -13,6 +13,12 @@ const Login = () => {
         email: '',
         password: ''
     })
+
+    const inputRef = useRef();
+
+    useEffect(() => {
+        inputRef.current.focus();
+    }, []);
 
     const onChange = (e) => {
         e.preventDefault();
@@ -38,6 +44,7 @@ const Login = () => {
                         <form>
                             <WrapperFields> 
                                 <Input 
+                                    inner={inputRef}
                                     type='email'
                                     id='email'
                                     name='email'

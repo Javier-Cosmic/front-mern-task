@@ -24,6 +24,15 @@ const ButtonLayout = styled.input`
         color:white;
     }
 
+    ${({secondary}) => secondary && css`
+        background: #E42F8A;
+        color: white;
+
+        &:hover{
+            transform: scale(0.9,0.9);
+        }
+    `};
+
     @media (max-width: 600px){
         font-size: 16px;
         padding:${({paddingxs}) => paddingxs || '1rem'};
@@ -34,6 +43,7 @@ const ButtonLayout = styled.input`
 `;
 
 const ButtonInput = ({
+    secondary,
     hoverMain,
     padding,
     marginxs,
@@ -47,6 +57,7 @@ const ButtonInput = ({
     value,
     }) => (
     <ButtonLayout
+        secondary={secondary}
         hoverMain={hoverMain}
         padding={padding}
         marginxs={marginxs}
