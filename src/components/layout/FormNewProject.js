@@ -12,7 +12,7 @@ const opacity = keyframes`
   
     100%{
         opacity: 1;
-        top: 0px;
+        top: 0;
     }
 `;
 

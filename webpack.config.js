@@ -1,7 +1,9 @@
+const Dotenv = require ('dotenv-webpack') ; 
 const path = require('path');  
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+
     entry: './src/index.js',
     output: {
         path: path.join(__dirname,'dist'),
@@ -60,5 +62,7 @@ module.exports = {
             //     useShortDoctype: true
             // }
         }),
+
+        new Dotenv()
     ]
 }

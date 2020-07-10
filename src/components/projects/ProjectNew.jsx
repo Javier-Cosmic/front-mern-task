@@ -70,7 +70,7 @@ const ProjectNew = ({hover, bcolor, color}) => {
                 hoverMain={hoverTheme}
                 color='white'
                 margin='5px 0px 15px 0'
-                marginxs={newForm ? '0 0 15px 0' : '0 0 45px 0'}
+                marginxs={newForm ? '0 0 15px 0' : '0 0 60px 0'}
                 type='button'
                 onClick={onClickForm}>
                 &#xf067;  Nuevo proyecto

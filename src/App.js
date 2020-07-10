@@ -5,6 +5,8 @@ import CreateAccount from './components/auth/CreateAccount';
 import ProjectsMain from './components/projects/ProjectsMain';
 import ProjectState from './context/projects/ProjectState';
 import TaskState from './context/tasks/TaskState';
+import AlertState from './context/alerts/AlertState';
+import AuthState from './context/auth/AuthState';
 
 const App = () => {
   
@@ -12,13 +14,17 @@ const App = () => {
     // Consumer para acceder a las props del project state y task state
     <ProjectState> 
       <TaskState>
-        <Router>
-          <Switch>
-            <Route exact path='/' component={Login}/>
-            <Route exact path='/crear-cuenta' component={CreateAccount}/>
-            <Route exact path='/proyectos' component={ProjectsMain}/>
-          </Switch>
-        </Router>
+        <AlertState>
+          <AuthState>
+            <Router>
+              <Switch>
+                <Route exact path='/' component={Login}/>
+                <Route exact path='/crear-cuenta' component={CreateAccount}/>
+                <Route exact path='/proyectos' component={ProjectsMain}/>
+              </Switch>
+            </Router>
+          </AuthState>
+        </AlertState>
       </TaskState>
     </ProjectState>
   );

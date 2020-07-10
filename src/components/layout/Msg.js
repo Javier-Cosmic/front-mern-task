@@ -54,7 +54,7 @@ const StyleMsg = styled.p`
   justify-content: ${({ justify }) => justify || "space-between"};
   font-size: ${({ fontsize }) => fontsize || "10.9px"};
   font-weight: 600;
-  padding: 1rem;
+  padding: 0.6rem;
   animation: ${opacity} 0.2s ease-in-out;
   align-items: center;
   margin-bottom: 1rem;
@@ -73,7 +73,7 @@ const StyleMsg = styled.p`
     errorTask &&
     css`
       display: block;
-      width: 50%;
+      width: 70%;
       margin: 0 auto;
       text-align: center;
       background-color: #ffc6be;
@@ -81,15 +81,21 @@ const StyleMsg = styled.p`
       border: 1.5px solid #d2341c;
       animation: ${opacity} 0.25s ease-in-out;
 
+
       @media (max-width: 600px) {
-        width: 100%;
-        margin-top: 25px;
+        width: ${({widthxs}) => widthxs || '100%' };
+        margin-top: ${({mtopxs}) => mtopxs || '25px'};
       }
+
   `};
+
+  @media (min-width: 769px){
+      width: 50%;
+  }
 
   @media (max-width: 768px) {
     justify-content: center;
-    font-size: ${({ fontsizesm }) => fontsizesm || "15px"};
+    font-size: ${({ fontsizesm }) => fontsizesm || "13px"};
   }
 
   @media (max-width: 600px) {
@@ -98,6 +104,8 @@ const StyleMsg = styled.p`
 `;
 
 const Msg = ({
+    mtopxs,
+    widthxs,
     errorTask,
     justify,
     fontsizesm,
@@ -108,6 +116,8 @@ const Msg = ({
     children,
     }) => (
     <StyleMsg
+        mtopxs={mtopxs}
+        widthxs={widthxs}
         errorTask={errorTask}
         justify={justify}
         fontsizesm={fontsizesm}
