@@ -12,12 +12,12 @@ const AlertState = ({ children }) => {
     const [state, dispatch] = useReducer(AlertReducer, initialState);
 
     // funcion mostrar alerta
-    const showAlert = (msg, category) => {
+    const showAlert = (msg) => {
         dispatch({
             type: SHOW_ALERT,
             payload: {
                 msg,
-                category
+                // category
             }
         });
 
@@ -27,7 +27,7 @@ const AlertState = ({ children }) => {
                 type: HIDE_ALERT
             });
 
-        }, 5000);
+        }, 3000);
     }
 
     const values = {

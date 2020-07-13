@@ -13,9 +13,9 @@ const InputStyle = styled.input`
   
   &:focus{
       color: #505050;
-      box-shadow: 1px 1px 5px 4px rgb(178, 150, 164, 0.5);
-      -webkit-box-shadow: 1px 1px 5px 4px rgb(178, 150, 164, 0.5);
-      -moz-box-shadow: 1px 1px 5px 4px rgb(178, 150, 164, 0.5);
+      box-shadow: 1px 1px 5px 4px rgb(178, 150, 164, 0.2);
+      -webkit-box-shadow: 1px 1px 5px 4px rgb(178, 150, 164, 0.2);
+      -moz-box-shadow: 1px 1px 5px 4px rgb(178, 150, 164, 0.2);
       border-radius: 1rem;  
   }
 

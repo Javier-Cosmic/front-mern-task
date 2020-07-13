@@ -15,10 +15,12 @@ import ButtonList from "../layout/ButtonList";
 import Menu from "../layout/Menu";
 import ButtonToggle from "../layout/ButtonToggle";
 import Overlay from "../layout/Overlay";
+import Swal from "sweetalert2";
 import TaskForm from "../tasks/TaskForm";
 import TaskList from "../tasks/TaskList";
 import ThemeContext from "../../context/projects/ThemeContext";
 import ProjectContext from "../../context/projects/ProjectContext";
+import AuthContext from "../../context/auth/AuthContext";
 
 const Projects = () => {
   const [color, setColor] = useState("#A5BFBE");
@@ -26,11 +28,15 @@ const Projects = () => {
   const [hover, setHover] = useState("#E42F8A");
   const [menu, setMenu] = useState(false);
 
+  // context auth state
+  const authContext = useContext(AuthContext);
+  const { userAuth, user, logout } = authContext;
+
   // context project state
   const projectContext = useContext(ProjectContext);
   const { currentProject } = projectContext;
 
-  // Metodo para cambiar los colores del tema -> parametro obtenido del select {options} -> colores
+  // Metodo para cambiar los colores del tema -> parametro obtenido del select {options} que permite seleccionar el color
   const changeColor = (color) => {
     setColor(color.value);  // --> se cambia el color 
 
@@ -55,6 +61,29 @@ const Projects = () => {
     }
   };
 
+  // boton cerrar sesion
+  const logoutF = () => {
+    logout();
+
+    // alerta
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'success',
+      title: 'Se ha cerrado tu sesion.'
+    })
+  }
+
   // Boton menu responsive
   const menuToggle = () => {
     setMenu(!menu);
@@ -62,6 +91,10 @@ const Projects = () => {
 
   // Guardando el tema elegido en el localstorage
   useEffect(() => {
+
+    // verificar usuario autenticado
+    userAuth();
+
     const colorDefault = localStorage.getItem("color");
     const textColorDefault = localStorage.getItem("colorText");
     const hoverDefault = localStorage.getItem("hover");
@@ -126,9 +159,13 @@ const Projects = () => {
             <ButtonToggle colorText={textColor} onClick={menuToggle}>
               &#xf0c9;
             </ButtonToggle>
-            Hola <span>Javier</span>
+            Hola <span>{ user ? user.names : null}</span>
           </NameUser>
-          <ButtonList hoverColor={hover} margin="0px" colorText={textColor}>
+          <ButtonList 
+              hoverColor={hover} 
+              margin="0px" 
+              colorText={textColor}
+              onClick={logoutF}>
             Cerrar sesion &#xf08b;
           </ButtonList>
         </Header>

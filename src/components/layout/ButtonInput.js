@@ -43,6 +43,7 @@ const ButtonLayout = styled.input`
 `;
 
 const ButtonInput = ({
+    disabled,
     secondary,
     hoverMain,
     padding,
@@ -69,6 +70,7 @@ const ButtonInput = ({
         margin={margin}
         type={type}
         value={value}
+        disabled={disabled}
     />
 );
 

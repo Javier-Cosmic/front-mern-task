@@ -25,7 +25,7 @@ const ProjectsList = ({hoverColor, color, colorText }) => {
             marginsm="10px"
             color={colorText}
         >
-            Aún no has creado tu primer proyecto.
+            Empieza creando tu primer proyecto
         </Paragraph>
         );
     }

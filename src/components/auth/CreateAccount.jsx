@@ -6,17 +6,17 @@ import Titles from '../layout/Titles';
 import Label from '../layout/Label';
 import Input from '../layout/Input';
 import ButtonInput from '../layout/ButtonInput';
-import Button from '../layout/Button';
 import LinkTo from '../layout/LinkTo';
 import Msg from '../layout/Msg';
+import Swal from 'sweetalert2';
 import AlertContext from '../../context/alerts/AlertContext';
 import AuthContext from '../../context/auth/AuthContext';
 
-
-const CreateAccount = () => {
+// props history router dom
+const CreateAccount = ({ history }) => {
 
     const authContext = useContext(AuthContext);
-    const {registerUser} = authContext;
+    const {isAuth, msgAuth, registerUser} = authContext;
 
     const alertContext = useContext(AlertContext);
     const {alert, showAlert} = alertContext;
@@ -34,8 +34,37 @@ const CreateAccount = () => {
     useEffect(() => {
         inputRef.current.focus();
 
-        console.log(process.env.API_URL);
-    }, []);
+        // si el usuario esta logueado 
+        if (isAuth){
+
+            // alerta
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                onOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'Has iniciado sesion correctamente.'
+              })
+
+            history.push('/proyectos');
+        }
+
+        // mostrar un mensaje de error desde el servidor
+        if(msgAuth){
+            showAlert(msgAuth.msg);   // ---> msgAuth corresponde al auth y 'msg' es un parametro del payload como obj
+        }
+        
+        
+    }, [msgAuth, isAuth, history]);
 
     const onChange = e => {
 
@@ -65,21 +94,32 @@ const CreateAccount = () => {
         if(password !== repassword){
             showAlert('Las claves no son iguales.');
             return;
+            
+        }else{ 
+            // le pasamos a la funcion del context los datos almacenados del state
+            registerUser({
+                names,
+                email,
+                password
+            })
         }
 
-        registerUser({
-            names,
-            email,
-            password
-        })
-
+        if(!msgAuth === 'El usuario ya está registrado.'){
+            // alerta
+            Swal.fire({
+                icon: 'success',
+                title: 'Usuario creado exitosamente!',
+                confirmButtonColor: '#2F2F2F'
+                
+            })
+        }
+        
     }
 
     return (
         <WrapperUser>
             <WrapperBox width='35%'>
-                {alert ? (<Msg errorTask mtopxs='0px' widthxs='90%'>{alert.msg}</Msg>) : null}
-                <Titles fontsizexs='30px' margin={alert ? '20px 0 0 0' : '0px'} marginxs='20px 0px 30px 0px'>Crea tu cuenta</Titles>
+                <Titles fontsizexs='30px' marginxs='0px 0px 30px 0px'>Crea tu cuenta</Titles>
                 <form onSubmit={onSubmit}>
                     <WrapperFields>
                         <Label size='15px' width='320px' htmlFor='name'>Nombre: </Label>
@@ -91,7 +131,7 @@ const CreateAccount = () => {
                             value={names}
                             placeholder='Ingresa tu nombre y apellido'
                             onChange={onChange}
-                        />
+                            />
                     </WrapperFields>
                     <WrapperFields>
                         <Label size='15px' width='320px' htmlFor='email'>Correo electronico:</Label>
@@ -102,7 +142,7 @@ const CreateAccount = () => {
                                 value={email}
                                 placeholder='Ingresa tu correo electronico'
                                 onChange={onChange}
-                            />
+                                />
                     </WrapperFields>
                     <WrapperFields>
                     <Label size='15px' width='320px' htmlFor='password'>Contraseña:</Label>
@@ -113,7 +153,7 @@ const CreateAccount = () => {
                                 value={password}
                                 placeholder='Ingresa tu contraseña'
                                 onChange={onChange}
-                            />
+                                />
                     </WrapperFields>
                     <WrapperFields>
                     <Label size='15px' width='320px' htmlFor='password'>Confirmar contraseña:</Label>
@@ -126,13 +166,8 @@ const CreateAccount = () => {
                                 onChange={onChange}
                             />
                     </WrapperFields>
+                        {alert ? (<Msg errorTask mtopxs='30px' widthxs='87%'>{alert.msg}</Msg>) : null}
                     <WrapperFields>
-                        {/* <Button
-                            type='submit'
-                            >
-                            Registrarme
-                        </Button> */}
-
                         <ButtonInput
                             type='submit'
                             value='Registrarme'
