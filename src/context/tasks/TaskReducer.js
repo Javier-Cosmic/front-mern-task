@@ -3,9 +3,9 @@ import {
     NEW_TASK,
     ERROR_TASK,
     DELETE_TASK,
-    TASK_STATE,
     TASK_CURRENT,
-    UPDATE_TASK
+    UPDATE_TASK,
+    CLEAN_TASK
 } from '../../types';
 
 export default (state, action) => {
@@ -14,7 +14,7 @@ export default (state, action) => {
         case TASK_PROJECT:
             return{
                 ...state,
-                taskProject: state.tasks.filter( task => task.projectId === action.payload),
+                taskProject: action.payload,
                 currentask: null,
                 errorTask: false
             }
@@ -22,7 +22,7 @@ export default (state, action) => {
         case NEW_TASK:
             return{
                 ...state,
-                tasks: [...state.tasks, action.payload],
+                taskProject: [action.payload, ...state.taskProject],
                 errorTask: false
             }
         
@@ -35,14 +35,13 @@ export default (state, action) => {
         case DELETE_TASK:
             return{
                 ...state,
-                tasks: state.tasks.filter(task => task.id !== action.payload)
+                taskProject: state.taskProject.filter(task => task._id !== action.payload)
             }
 
-        case TASK_STATE:
         case UPDATE_TASK:
             return{
                 ...state,
-                tasks: state.tasks.map(task => task.id === action.payload.id ? action.payload : task),
+                taskProject: state.taskProject.map(task => task._id === action.payload._id ? action.payload : task),
                 currentask: null
             }
 
@@ -51,6 +50,12 @@ export default (state, action) => {
                 ...state,
                 currentask: action.payload,
                 errorTask: false
+            }
+
+        case CLEAN_TASK:
+            return{
+                ...state,
+                taskProject: []
             }
         
         default:

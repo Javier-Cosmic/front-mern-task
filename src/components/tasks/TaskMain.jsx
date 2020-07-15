@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Task from '../layout/Task';
 import TaskContainer from '../layout/TaskContainer';
 import ButtonState from '../layout/ButtonState';
@@ -13,7 +13,7 @@ const TaskMain = ({task}) => {
 
     // context de task state
     const taskContext = useContext(TaskContext);
-    const {deleteTask, getTask, changeState, currentTask, updateTask} = taskContext;
+    const {deleteTask, getTask, currentTask, updateTask} = taskContext;
 
     // context de project state
     const projectContext = useContext(ProjectContext);
@@ -21,6 +21,11 @@ const TaskMain = ({task}) => {
 
     // array destructuring para saber la posicion
     const [currentName] = currentProject;
+
+    useEffect(() => {
+        // actualizar las tareas a mostrar
+        getTask(currentName._id);
+    },[]);
 
     
     const deleteTaskF = () => {
@@ -40,10 +45,7 @@ const TaskMain = ({task}) => {
             if (result.value) {
     
             // funcion proveniente del context
-            deleteTask(task.id);
-
-            // actualizar las tareas a mostrar
-            getTask(currentName.id);
+            deleteTask(task._id, currentName._id);
     
             Swal.fire({
                 icon: 'success',
@@ -58,14 +60,14 @@ const TaskMain = ({task}) => {
     // cambiar estado
     const changeStateF = () => {
         
-        if(task.estado){
-            task.estado = false;
+        if(task.state){
+            task.state = false;
         }else{
-            task.estado = true;
+            task.state = true;
         }
 
         // le pasamos por parametro el objeto tarea modificada
-        changeState(task);
+        updateTask(task);
     }
 
     //obtener tarea actual para editar
@@ -78,7 +80,7 @@ const TaskMain = ({task}) => {
             <Paragraph>{task.name}</Paragraph>
 
             <TaskContainer>
-                {task.estado
+                {task.state
                     ? <ButtonState onClick={changeStateF} complete>
                        <IconColor color='#5FC85F'> &#xf058; </IconColor>Completado
                     </ButtonState>

@@ -37,7 +37,7 @@ const StyleMsg = styled.p`
     errorTask &&
     css`
       display: block;
-      width: 70%;
+      width: ${({width}) => width || '70%'};
       margin: 0 auto;
       text-align: center;
       background-color: #ffc6be;
@@ -67,6 +67,7 @@ const StyleMsg = styled.p`
 `;
 
 const Msg = ({
+    width,
     mtopxs,
     widthxs,
     errorTask,
@@ -79,6 +80,7 @@ const Msg = ({
     children,
     }) => (
     <StyleMsg
+        width={width}
         mtopxs={mtopxs}
         widthxs={widthxs}
         errorTask={errorTask}

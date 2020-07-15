@@ -10,11 +10,11 @@ import AuthState from './context/auth/AuthState';
 import tokenAuth from './config/token';
 import PrivateRoute from './components/route/PrivateRoute';
 
-// verificar si existe un token
-// const token = localStorage.getItem('token');
-// if (token) {
-//   tokenAuth(token);
-// }
+// verificar si existe un token al refrescar la pagina
+const token = localStorage.getItem('token');
+if (token) {
+  tokenAuth(token);
+}
 
 const App = () => {
 

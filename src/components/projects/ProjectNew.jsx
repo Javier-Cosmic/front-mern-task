@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import Button from '../layout/Button';
 import ButtonInput from '../layout/ButtonInput';
 import FormNewProject from '../layout/FormNewProject';
@@ -11,13 +11,24 @@ const ProjectNew = ({hover, bcolor, color}) => {
 
     // utilizamos el context de project state
     const projectContext = useContext(ProjectContext);
-    const { newForm, viewForm, addProject, msgValidateForm, validateForm} = projectContext;
+    const { msgError, newForm, viewForm, addProject, msgValidateForm, validateForm} = projectContext;
 
     const [project, setProject] = useState({
         name: ''
     });
 
     const { name } = project;
+
+    useEffect(() => {
+        if(msgError){
+            // alerta
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de servidor.',
+                confirmButtonColor: '#2F2F2F'
+            })
+        }
+    }, [msgError])
 
     const onChangeProject = (e) =>{
         setProject({
@@ -36,13 +47,12 @@ const ProjectNew = ({hover, bcolor, color}) => {
         }
         // agregar proyecto  --> le pasamos como parametro el state project a la funcion proveniente del context
         addProject(project);
-
-        // alerta
-        Swal.fire({
-            icon: 'success',
-            title: 'Proyecto Agregado',
-            confirmButtonColor: '#2F2F2F'
-        })
+            // alerta
+            Swal.fire({
+                icon: 'success',
+                title: 'Proyecto Agregado',
+                confirmButtonColor: '#2F2F2F'
+            })
 
         //limpiar el campo
         setProject({
@@ -70,7 +80,7 @@ const ProjectNew = ({hover, bcolor, color}) => {
                 hoverMain={hoverTheme}
                 color='white'
                 margin='5px 0px 15px 0'
-                marginxs={newForm ? '0 0 15px 0' : '0 0 60px 0'}
+                marginxs={newForm ? '0 0 15px 0' : '0 0 28px 0'}
                 type='button'
                 onClick={onClickForm}>
                 &#xf067;  Nuevo proyecto

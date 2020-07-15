@@ -40,6 +40,7 @@ const TaskForm = () => {
       // se actualiza el formulario tarea con la tarea actual
       setTasks(currentask);
       inputRef.current.focus()
+      
     }else{
       setTasks({
           name: ''
@@ -69,8 +70,8 @@ const TaskForm = () => {
     //validacion para saber si es edicion o agregar nueva tarea
     if (currentask === null) {
       // le añadimos el id del proyecto actual a las tareas
-      tasks.projectId = currentName.id;
-      tasks.estado = false;
+      tasks.project = currentName._id;
+      
       // le pasamos por parametros el objeto tarea
       addTask(tasks);
       //alerta
@@ -91,7 +92,7 @@ const TaskForm = () => {
     }
 
     // actualizar las tareas a mostrar
-    getTask(currentName.id);
+    getTask(currentName._id);
 
     //limpiar state
     setTasks({

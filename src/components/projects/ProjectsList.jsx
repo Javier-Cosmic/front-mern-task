@@ -32,10 +32,10 @@ const ProjectsList = ({hoverColor, color, colorText }) => {
 
     return (
         <>
-        {projects.map((proyecto) => (
+        {projects.map((projects) => (
             <ProjectContent
-                key={proyecto.id}
-                project={proyecto}
+                key={projects._id}
+                project={projects}
                 hoverColor={hoverColor}
                 colorText={colorText}
                 color={color}

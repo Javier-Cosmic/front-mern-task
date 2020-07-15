@@ -1,30 +1,27 @@
 import React, { useReducer } from 'react';
 import ProjectContext from './ProjectContext';
 import ProjectReducer from './ProjectReducer';
-import { v4 as uuidv4 } from 'uuid';
 import { 
     NEW_PROJECT, 
     GET_PROJECT,
     ADD_PROJECT,
     VALIDATE_FORM,
     CURRENT_PROJECT,
-    DELETE_PROJECT
+    DELETE_PROJECT,
+    PROJECT_ERROR,
+    CLEAN_PROJECT
  } from '../../types';
+import clientAxios from '../../config/Axios';
 
 
 const ProjectState = ({children}) => {
-
-    const proyectos = [
-        {id: 1, name: 'Login'},
-        {id: 2, name: 'Ecommerce'},
-        {id: 3, name: 'Diseño'},
-    ]
     
     const initialState = {
         projects: [], 
         FormNewproject: false,
         msgValidateForm: false,
-        currentproject: null
+        currentproject: null,
+        msg: null
     }
 
     // Dispatch para ejecutar las acciones
@@ -40,24 +37,75 @@ const ProjectState = ({children}) => {
         })
     }
 
-    //obtener los proyectos  ---> por parametros le pasamos la constante proyectos igual a un array de objetos
-    const getProject = () => {
+    // limpiar state
+    const cleanProject = () => {
         dispatch({
-            type: GET_PROJECT,
-            payload: proyectos,
+            type: CLEAN_PROJECT
         })
+    }
+    
+    //obtener los proyectos  ---> por parametros le pasamos la constante proyectos igual a un array de objetos
+    const getProject = async () => {
+        
+        try {            
+            const res = await clientAxios.get('/api/projects');
+            
+            dispatch({
+                type: GET_PROJECT,
+                payload: res.data.projects
+            })
+
+        } catch (error) {
+
+            const alert = {
+                msg: 'Ha ocurrido un error.'
+            }
+            
+            dispatch({
+                type: PROJECT_ERROR,
+                payload: alert
+            })
+
+            setTimeout(() => {
+                dispatch({
+                    type: PROJECT_ERROR,
+                    payload: null
+                })
+            }, 3000)
+        }
     }
 
     // agregar un proyecto nuevo
-    const addProject = (proyectos) => {
-        // agregamos el id
-        proyectos.id = uuidv4();
+    const addProject = async (project) => {
         
-        //agregamos el proyecto
-        dispatch({
-            type: ADD_PROJECT,
-            payload: proyectos
-        })
+        try {
+            
+            const res = await clientAxios.post('/api/projects', project);
+
+            //agregamos el proyecto
+            dispatch({
+                type: ADD_PROJECT,
+                payload: res.data
+            })
+
+        } catch (error) {
+
+            const alert = {
+                msg: 'Ha ocurrido un error.'
+            }
+            
+            dispatch({
+                type: PROJECT_ERROR,
+                payload: alert
+            })
+
+            setTimeout(() => {
+                dispatch({
+                    type: PROJECT_ERROR,
+                    payload: null
+                })
+            }, 3000)
+        } 
       
     }
 
@@ -77,11 +125,36 @@ const ProjectState = ({children}) => {
     }
 
     // borrar proyecto
-    const deleteProject = (projectId) => {
-        dispatch({
-            type: DELETE_PROJECT,
-            payload: projectId
-        })
+    const deleteProject = async (projectId) => {
+
+        try {
+            
+            await clientAxios.delete(`/api/projects/${projectId}`);
+            
+            dispatch({
+                type: DELETE_PROJECT,
+                payload: projectId
+            })
+                        
+            
+        } catch (error) {
+
+            const alert = {
+                msg: 'Ha ocurrido un error.'
+            }
+            
+            dispatch({
+                type: PROJECT_ERROR,
+                payload: alert
+            })
+
+            setTimeout(() => {
+                dispatch({
+                    type: PROJECT_ERROR,
+                    payload: null
+                })
+            }, 3000)
+        }
     }   
 
     // los valores que recibe el context provider
@@ -90,12 +163,14 @@ const ProjectState = ({children}) => {
         newForm: state.FormNewProject,
         msgValidateForm: state.msgValidateForm,
         currentProject: state.currentproject,
+        msgError: state.msg,
         viewForm,
         getProject,
         addProject,
         validateForm,
         projectCurrent,
-        deleteProject
+        deleteProject,
+        cleanProject
     }
 
     return (

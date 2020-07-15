@@ -1,4 +1,4 @@
-import React, {Fragment, useContext } from "react";
+import React, {Fragment, useContext, useEffect} from "react";
 import ButtonList from "../layout/ButtonList";
 import Button from "../layout/Button";
 import ContainerProject from "../layout/ContainerProject";
@@ -19,16 +19,27 @@ const ProjectContent = ({project, hoverColor, colorText}) => {
 
   // utilzamos el context de project state
   const projectContext = useContext(ProjectContext);
-  const {projectCurrent, deleteProject} = projectContext;
-
+  const {msgError, getProject, projectCurrent, deleteProject} = projectContext;
   
   // Utilizamos la funcion que extraemos del  project context 
   const getProjectTask = () => {
-      projectCurrent(project.id);
+      projectCurrent(project._id);
       setMenu(false);
 
-      getTask(project.id);  // ---> extraemos la funcion del task Context
+      getTask(project._id);  // ---> extraemos la funcion del task Context
   }
+
+  useEffect(() => {
+    if (msgError) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de servidor.',
+        confirmButtonColor: '#2F2F2F', 
+      }) 
+    }
+    
+    getProject();
+  }, [msgError])
   
   // borrar un proyecto x id
   const deleteProjectF = () => {  
@@ -46,48 +57,48 @@ const ProjectContent = ({project, hoverColor, colorText}) => {
 
     }).then((result) => {
       if (result.value) {
-
         // funcion proveniente del context
-        deleteProject(project.id);
+        deleteProject(project._id);
 
         Swal.fire({
-            icon: 'success',
-            title: 'Proyecto eliminado',
-            confirmButtonColor: '#2F2F2F',
-            text: `Tu proyecto ${project.name} ha sido eliminado con exito.`
-        })
+          icon: 'success',
+          title: 'Proyecto eliminado',
+          confirmButtonColor: '#2F2F2F',
+          text: `Tu proyecto ${project.name} ha sido eliminado con exito.`
+        }) 
+                
       }
     })
   }
   
   return (
     <Fragment>
-      <ContainerProject>
-        <ButtonList 
-          hoverColor={hoverColor} 
-          colorText={colorText}
-          onClick={getProjectTask}>
-            {project.name}
-        </ButtonList>
-
-        {/* boton eliminar proyecto */}
-        <Button
-          buttonMenuX
-          marginxs="-10px 0 0 0"
-          paddingxs="0"
-          padding="0"
-          width="10%"
-          display="flex"
-          deleteButton
-          color={colorText}
-          hovernoBG
-          hoverColor={hoverColor}
-          type='button'
-          onClick={deleteProjectF}
-        >
-          &#xf1f8;
-        </Button>
-      </ContainerProject>
+        <ContainerProject>
+          <ButtonList 
+            hoverColor={hoverColor} 
+            colorText={colorText}
+            onClick={getProjectTask}>
+              {project.name}
+          </ButtonList>
+  
+          {/* boton eliminar proyecto */}
+          <Button
+            buttonMenuX
+            marginxs="-10px 0 0 0"
+            paddingxs="0"
+            padding="0"
+            width="10%"
+            display="flex"
+            deleteButton
+            color={colorText}
+            hovernoBG
+            hoverColor={hoverColor}
+            type='button'
+            onClick={deleteProjectF}
+          >
+            &#xf1f8;
+          </Button>
+        </ContainerProject>  
     </Fragment>
   );
 };

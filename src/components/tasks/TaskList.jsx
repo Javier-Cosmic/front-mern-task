@@ -32,7 +32,7 @@ const TaskList = () => {
     )
   }
 
-  // array destructuring ---> extraer la posicion actual
+  // array destructuring ---> extraer la posicion actual 0
   const [currentName] = currentProject;
 
   return (
@@ -65,7 +65,7 @@ const TaskList = () => {
               Aún no has creado tu primera tarea.
           </Msg>
         ) : (
-          taskProject.map((tasks) => <TaskMain key={tasks.id} task={tasks} />)
+          taskProject.map((tasks, i) => <TaskMain key={i} task={tasks} />)
         )}
       </ListTask>
     </ContainerTaskList>

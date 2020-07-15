@@ -21,6 +21,7 @@ import TaskList from "../tasks/TaskList";
 import ThemeContext from "../../context/projects/ThemeContext";
 import ProjectContext from "../../context/projects/ProjectContext";
 import AuthContext from "../../context/auth/AuthContext";
+import TaskContext from "../../context/tasks/TaskContext";
 
 const Projects = () => {
   const [color, setColor] = useState("#A5BFBE");
@@ -32,9 +33,13 @@ const Projects = () => {
   const authContext = useContext(AuthContext);
   const { userAuth, user, logout } = authContext;
 
+  // context task state
+  const taskContext = useContext(TaskContext);
+  const {cleanTask, taskProject} = taskContext;
+
   // context project state
   const projectContext = useContext(ProjectContext);
-  const { currentProject } = projectContext;
+  const { currentProject, cleanProject } = projectContext;
 
   // Metodo para cambiar los colores del tema -> parametro obtenido del select {options} que permite seleccionar el color
   const changeColor = (color) => {
@@ -82,6 +87,9 @@ const Projects = () => {
       icon: 'success',
       title: 'Se ha cerrado tu sesion.'
     })
+
+    cleanTask();
+    cleanProject();
   }
 
   // Boton menu responsive
@@ -170,15 +178,15 @@ const Projects = () => {
           </ButtonList>
         </Header>
 
-            <main>
-              {currentProject
-                ? <TaskForm />
-                : null
-              }
-              <ContainerTask>
-                <TaskList />
-              </ContainerTask>
-            </main>
+             <main>
+                {currentProject
+                  ? <TaskForm />
+                  : null
+                }
+                <ContainerTask>
+                  <TaskList />
+                </ContainerTask>
+              </main>
 
         {/* Menu dispositivos celulares */}
           <Menu transform={menu ? '0' : 'translateX(-110%)'} changeColor={color}>

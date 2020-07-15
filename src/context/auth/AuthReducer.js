@@ -17,13 +17,15 @@ export default (state, action) => {
                 ...state,
                 auth: true,
                 msg: null,
+                loading: false
             }
 
         case GET_USER:
             return{
                 ...state,
                 user: action.payload,
-                auth: true,  
+                auth: true,
+                loading: false  
             }
 
         case LOGOUT:
@@ -36,6 +38,7 @@ export default (state, action) => {
                 user: null,
                 auth: null,
                 msg: action.payload,
+                loading: false
             }
     
         default:

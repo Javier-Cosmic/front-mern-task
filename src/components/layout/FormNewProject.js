@@ -4,12 +4,9 @@ import styled, {keyframes} from 'styled-components';
 const opacity = keyframes`
     0%{
         opacity: 0;
-        top: -50px;
+        top: -40px;
     }
-    40%{
-        opacity: 0;
-    }
-  
+
     100%{
         opacity: 1;
         top: 0;

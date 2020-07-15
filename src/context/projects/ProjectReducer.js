@@ -4,7 +4,9 @@ import {
     ADD_PROJECT,
     VALIDATE_FORM,
     CURRENT_PROJECT,
-    DELETE_PROJECT
+    DELETE_PROJECT,
+    PROJECT_ERROR,
+    CLEAN_PROJECT
 } from '../../types';
 
 export default (state, action) => {
@@ -40,7 +42,7 @@ export default (state, action) => {
         case CURRENT_PROJECT:
             return {
                 ...state,
-                currentproject: state.projects.filter( project => project.id === action.payload),
+                currentproject: state.projects.filter( project => project._id === action.payload),
                 msgValidateForm: false,
                 // FormNewProject: false
             }
@@ -48,7 +50,19 @@ export default (state, action) => {
         case DELETE_PROJECT:
             return {
                 ...state,
-                projects: state.projects.filter( project => project.id !== action.payload),
+                projects: state.projects.filter( project => project._id !== action.payload),
+                currentproject: null
+            }
+
+        case PROJECT_ERROR:
+            return{
+                ...state,
+                msg: action.payload
+            }
+
+        case CLEAN_PROJECT:
+            return{
+                ...state,
                 currentproject: null
             }
         
