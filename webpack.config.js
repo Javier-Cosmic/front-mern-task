@@ -11,16 +11,19 @@ module.exports = {
         publicPath: '/'
     },
 
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    },
+
     devServer: {
         port: 5000,
         host: '0.0.0.0',
         open: true,
         openPage: 'http://localhost:5000',
         historyApiFallback: true
-        //host: '192.168.0.24'
     },
-
-    // devtool:'inline-source-map',
 
     resolve: {
         extensions: ['.js', '.jsx']
@@ -41,7 +44,6 @@ module.exports = {
                         options: {
                             name: '[name].[ext]',
                             outputPath: '',
-                            // useRelativePath: true
                         }
                     }
                 ]
@@ -53,14 +55,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/public/index.html',
             favicon: "src/public/favicon.ico",
-            // minify: {
-            //     collapseWhitespace: true,
-            //     removeComments: true,
-            //     removeRedundantAttributes: true,
-            //     removeScriptTypeAttributes: true,
-            //     removeStyleLinkTypeAttributes: true,
-            //     useShortDoctype: true
-            // }
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true
+            }
         }),
 
         new Dotenv()

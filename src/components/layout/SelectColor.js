@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from "react-select";
 import {colors} from './Colors';
-import WindowedSelect from "react-windowed-select";
 
-const StyleSelect = styled(WindowedSelect)`
+const StyleSelect = styled(Select)`
     font-size: 14px;
 
     @media(max-width: 600px){
