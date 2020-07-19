@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import background from '../../public/fondo.jpg';
 
 const WrapperStyle = styled.div`
-    background-color: #95b8b6;
-    background-image: url(${background});
+    background: linear-gradient(190deg, rgb(116,148,152, 0.5), rgb(147, 175, 175) 40% , rgb(143,143,155, 0.8) , rgb(200,174,185));
     background-size: cover;
     height: 100vh;
     display: flex;

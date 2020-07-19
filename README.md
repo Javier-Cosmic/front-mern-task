@@ -4,5 +4,5 @@
 
 #### Comando de ejecución: 
 
-#### npm run build ---> desarrollo
-#### npm run prod_build ---> producción
+#### npm run dev ---> desarrollo
+#### npm run build ---> producción

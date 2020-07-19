@@ -1,4 +1,3 @@
-import clienteAxios from './Axios';
 import clientAxios from './Axios';
 
 const tokenAuth = token => {

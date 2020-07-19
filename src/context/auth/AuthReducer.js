@@ -4,12 +4,18 @@ import {
     GET_USER,
     LOGIN_SUCCESS,
     LOGIN_ERROR,
-    LOGOUT
+    LOGOUT,
+    LOADING_SPINNER
 } from '../../types';
 
 export default (state, action) => {
     switch (action.type) {
         
+        case LOADING_SPINNER:
+            return{
+                loadingSpinner: true
+            }
+
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             localStorage.setItem('token', action.payload.token)
@@ -17,7 +23,8 @@ export default (state, action) => {
                 ...state,
                 auth: true,
                 msg: null,
-                loading: false
+                loading: false,
+                loadingSpinner: false
             }
 
         case GET_USER:
@@ -38,7 +45,8 @@ export default (state, action) => {
                 user: null,
                 auth: null,
                 msg: action.payload,
-                loading: false
+                loading: false,
+                loadingSpinner: false
             }
     
         default:

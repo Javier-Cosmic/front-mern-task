@@ -10,11 +10,12 @@ import Swal from 'sweetalert2';
 import LinkTo from '../layout/LinkTo';
 import AlertContext from '../../context/alerts/AlertContext';
 import AuthContext from '../../context/auth/AuthContext';
+import Loading from '../layout/Loading';
 
 const Login = ({ history }) => {
 
     const authContext = useContext(AuthContext);
-    const { isAuth, msgAuth, login } = authContext;
+    const { isAuth, msgAuth, login, loadingSpinner } = authContext;
 
     const alertContext = useContext(AlertContext);
     const { alert, showAlert } = alertContext;
@@ -84,8 +85,8 @@ const Login = ({ history }) => {
         <WrapperUser>
                 <WrapperBox width='27%'>                        
                 <i className="fa fa-user-circle-o icon" aria-hidden="true"></i>       
-                    <Titles fontsizexs='30px' marginxs='0px 0px 30px 0px' color='#767676'>Inicio de Sesion</Titles>
-                        <form onSubmit={onSubmit}>
+                    <form onSubmit={onSubmit}>
+                        <Titles fontsizexs='30px' marginxs='0px 0px 30px 0px' color='#767676'>Inicio de Sesion</Titles>
                             <WrapperFields> 
                                 <Input 
                                     inner={inputRef}
@@ -108,14 +109,20 @@ const Login = ({ history }) => {
                                 />
                             </WrapperFields> 
                                 {alert ? (<Msg errorTask mtopxs='30px' widthxs='87%'>{alert.msg}</Msg>) : null}        
-                            <WrapperFields>
-                                <ButtonInput
-                                    type='submit'
-                                    value='Entrar'
-                                />
-                            </WrapperFields>
+                            
+                            {loadingSpinner
+                                ? <Loading />
+                                : <>
+                                    <WrapperFields>
+                                        <ButtonInput
+                                            type='submit'
+                                            value='Entrar'
+                                        />
+                                    </WrapperFields>
+                                    <LinkTo to={'/crear-cuenta'}>Registrarme</LinkTo>
+                                </> 
+                            }
                         </form>
-                        <LinkTo to={'/crear-cuenta'}>Registrarme</LinkTo>
                 </WrapperBox> 
         </WrapperUser>
     );

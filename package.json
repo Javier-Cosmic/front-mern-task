@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack-dev-server --mode development --open", 
-    "prod_build": "webpack --mode production" 
+    "dev": "webpack-dev-server --mode development --open", 
+    "build": "webpack --mode production" 
   },
   "keywords": [],
   "author": "Javier Contreras",

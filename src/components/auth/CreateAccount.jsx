@@ -11,12 +11,13 @@ import Msg from '../layout/Msg';
 import Swal from 'sweetalert2';
 import AlertContext from '../../context/alerts/AlertContext';
 import AuthContext from '../../context/auth/AuthContext';
+import Loading from '../layout/Loading';
 
 // props history router dom
 const CreateAccount = ({ history }) => {
 
     const authContext = useContext(AuthContext);
-    const {isAuth, msgAuth, registerUser} = authContext;
+    const {isAuth, msgAuth, registerUser, loadingSpinner} = authContext;
 
     const alertContext = useContext(AlertContext);
     const {alert, showAlert} = alertContext;
@@ -119,8 +120,8 @@ const CreateAccount = ({ history }) => {
     return (
         <WrapperUser>
             <WrapperBox width='35%'>
-                <Titles fontsizexs='30px' marginxs='0px 0px 30px 0px'>Crea tu cuenta</Titles>
                 <form onSubmit={onSubmit}>
+                <Titles fontsizexs='30px' marginxs='0px 0px 30px 0px'>Crea tu cuenta</Titles>
                     <WrapperFields>
                         <Label size='15px' width='320px' htmlFor='name'>Nombre: </Label>
                         <Input
@@ -167,14 +168,20 @@ const CreateAccount = ({ history }) => {
                             />
                     </WrapperFields>
                         {alert ? (<Msg errorTask mtopxs='30px' widthxs='87%'>{alert.msg}</Msg>) : null}
-                    <WrapperFields>
-                        <ButtonInput
-                            type='submit'
-                            value='Registrarme'
-                        />
-                    </WrapperFields>
+                        
+                    {loadingSpinner
+                        ? <Loading />
+                        : <>
+                            <WrapperFields>
+                                <ButtonInput
+                                    type='submit'
+                                    value='Registrarme'
+                                />
+                            </WrapperFields>
+                            <LinkTo to={'/'}>Volver atras</LinkTo>
+                        </>
+                    }
                 </form>
-                <LinkTo to={'/'}>Volver atras</LinkTo>
             </WrapperBox>
         </WrapperUser>
     );

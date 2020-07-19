@@ -9,7 +9,8 @@ import {
     GET_USER,
     LOGIN_SUCCESS,
     LOGIN_ERROR,
-    LOGOUT
+    LOGOUT, 
+    LOADING_SPINNER
 } from '../../types';
 
 const AuthState = ({children}) => {
@@ -19,14 +20,26 @@ const AuthState = ({children}) => {
         auth: null,
         user: null,
         msg: null,
-        loading: true
+        loading: true,
+        loadingSpinner: false,
     }
 
     const [state, dispatch] = useReducer(AuthReducer, initialState);
 
+    // loading spinner
+    const loadingSpinner = () => {
+        dispatch({
+            type: LOADING_SPINNER
+        })
+    }
+
     // funcion registrar usuarios
     const registerUser = async (data) => {
         try {
+
+            //spinner
+            loadingSpinner();
+
             // peticion a la ruta de la api
             const res = await clientAxios.post('/api/user', data);
 
@@ -93,6 +106,9 @@ const AuthState = ({children}) => {
     const login = async (data) => {
         try {
 
+            //spinner
+            loadingSpinner();
+
             const res = await clientAxios.post('/api/auth', data);
             
             dispatch({
@@ -138,6 +154,7 @@ const AuthState = ({children}) => {
         user: state.user,
         msgAuth: state.msg,
         loading: state.loading,
+        loadingSpinner: state.loadingSpinner,
         registerUser,
         login,
         userAuth,
